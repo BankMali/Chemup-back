@@ -1,56 +1,51 @@
 module.exports = (sequelize, DataTypes) => {
-    const Course = sequelize.define('Course', {
+    const Lesson = sequelize.define('Lesson', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,       // cant firstName = null
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
+        },
+        time: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         price: {
             type: DataTypes.STRING,
-            allowNull: false,
-        },
-        timeMax: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         color: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        status: DataTypes.STRING,
-        courseImg :DataTypes.STRING,
     },
     {
         underscored: true // carmelCase to underscore
     }
     )
 
-    Course.associate = models => {
-        Course.hasMany(models.Lesson, {
+  
+    Lesson.associate = models => {
+        Lesson.hasMany(models.SubLesson, {
             foreignkey: {
-                name: 'courseId',
-                allowNull: false
-            },
-            onDelete: 'RESTRICT'
-        })
-        Course.belongsTo(models.UserCourse, {
-            foreignkey: {
-                name: 'courseId',
-                allowNull: false
-            },
-            onDelete: 'RESTRICT'
-        })
-        Course.belongsTo(models.Order, {
-            foreignkey: {
-                name: 'courseId',
+                name: 'lessonId',
                 allowNull: false
             },
             onDelete: 'RESTRICT'
         })
     }
 
-    return Course
+    Lesson.associate = models => {
+        Lesson.hasMany(models.Course, {
+            foreignkey: {
+                name: 'lessonId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        })
+    }
+
+    return Lesson
 }

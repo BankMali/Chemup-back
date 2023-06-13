@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       mobile: {
           type: DataTypes.STRING,
           // allowNull: true,
-          unique: true,
+          // unique: true,
           validate: {
               is:/^[0-9]{10}$/
           }
@@ -46,15 +46,16 @@ module.exports = (sequelize, DataTypes) => {
       schoolName: {
           type: DataTypes.STRING,
           allowNull: true,
-          validate: {
-              notEmpty: false
-          }
+
       },
       role: {
           type: DataTypes.STRING,
           allowNull: true,
       },
-      profileImage :DataTypes.STRING,
+      profileImage :{
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
   },
   {
       underscored: true // carmelCase to underscore

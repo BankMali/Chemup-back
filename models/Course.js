@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Lesson = sequelize.define('Lesson', {
+    const Course = sequelize.define('Course', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,       // cant firstName = null
@@ -8,44 +8,55 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        time: {
+        price: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
+        timeMax: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         color: {
             type: DataTypes.STRING,
-            allowNull: false,
-        }
+            allowNull: true,
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        courseImg :{
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         underscored: true // carmelCase to underscore
     }
     )
 
-  
-    Lesson.associate = models => {
-        Lesson.hasMany(models.SubLesson, {
+    Course.associate = models => {
+        Course.belongsTo(models.Lesson, {
             foreignkey: {
-                name: 'lessonId',
+                name: 'courseId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        })
+        Course.belongsTo(models.UserCourse, {
+            foreignkey: {
+                name: 'courseId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        })
+        Course.belongsTo(models.Order, {
+            foreignkey: {
+                name: 'courseId',
                 allowNull: false
             },
             onDelete: 'RESTRICT'
         })
     }
 
-    Lesson.associate = models => {
-        Lesson.belongsTo(models.Course, {
-            foreignkey: {
-                name: 'lessonId',
-                allowNull: false
-            },
-            onDelete: 'RESTRICT'
-        })
-    }
-
-    return Lesson
+    return Course
 }

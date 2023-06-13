@@ -1,7 +1,5 @@
-const {sequelize, User, Course, Lesson,SubLesson} = require('./models')
+const {sequelize, User, Course, Lesson,SubLesson, UserCourse, Order,Payment} = require('./models')
 const bcrypt = require('bcryptjs');
-const Courses = require('./models/Courses');
-
 const hashed = bcrypt.hashSync("1234")
 
 sequelize
@@ -58,7 +56,98 @@ color: ".."
   time: 10,
   price: 990,
 color: ".."
-}
+},
+      {
+        name: "บทที่ 1 ความปลอดภัยและทักษะในปฏิบัติการเคมี",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 2 อะตอมและสมบัติของธาตุ",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 3 พันธะเคมี",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 4 โมลและสูตรเคมี",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 5 สารละลาย",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 6 ปริมาณสัมพันธ์",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 7 แก๊สและสมบัติของแก๊ส",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 8 อัตราการเกิดปฏิกิริยาเคมี",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 9 สมดุลเคมี",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 10 กรด-เบส",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 11 เคมีไฟฟ้า",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 12 เคมีอินทรีย์",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
+      {
+        name: "บทที่ 13 พอลิเมอร์",
+  description: "..",
+  time: 10,
+  price: 990,
+color: ".."
+},
 
 
     ]);
@@ -1328,6 +1417,42 @@ color: ".."
 
       
     ]);
-  }).then(()=>process.exit(0))
+  })
+  .then(() => {
+    return Order.bulkCreate([
+      {
+        quantity: 2,
+        totalPrice: 1890,
+        date: 2023-01-23,
+      },
+
+      
+    ]);
+  })
+  .then(() => {
+    return UserCourse.bulkCreate([
+      {
+        startDate: 2023-01-23,
+        endDate: 2023-02-23,
+        timeUse: 20,
+        timeMax: 44,
+        status: "paid",
+      },
+
+      
+    ]);
+  })
+  .then(() => {
+    return Payment.bulkCreate([
+      {
+        info: "...",
+        status: "done",
+        slipImg: "..url",
+      },
+
+      
+    ]);
+  })
+  .then(()=>process.exit(0))
   .catch((err) => console.log(err.message));
 

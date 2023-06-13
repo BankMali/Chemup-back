@@ -1,4 +1,4 @@
-const { Todo, User, sequelize } = require("../models");
+const { Todo, User} = require("../models");
 
 exports.getAllTodos = (req, res, next) => {
   const { id } = req.user;
@@ -36,6 +36,7 @@ exports.summaryTodo = (req, res, next) => {
     });
   });
 };
+
 
 exports.getTodoById = (req, res, next) => {
   const { id } = req.params;
@@ -77,11 +78,7 @@ exports.deleteTodo = (req, res, next) => {
     .catch(next);
 };
 
-// {
-//     "title": "Learn HTML",
-//     "dueDate": "2023-05-19",
-//     "userId": 2
-// }
+
 
 exports.updateTodo = (req, res, next) => {
   const { id } = req.params;
@@ -117,74 +114,62 @@ exports.getTodoByUser = (req, res, next) => {
     .catch(next);
 };
 
-// exports.summaryTodo = (req, res, next) => {
-//     User.findAll({
-//         attributes: ['name', 'password'],
-//         include: {
-//             model : Todo,
-//             attributes: [ [sequelize.fn('count', sequelize.col('title')), 'tasks' ]],
-//         },
-//         group: 'user_id'
-//     }).then(rs => {
-//         res.json(rs)
-//     }).catch(next)
-// }
 
-exports.doubleDelete = async (req, res, next) => {
-  const { id1, id2 } = req.params;
+// exports.doubleDelete = async (req, res, next) => {
+//   const { id1, id2 } = req.params;
 
-  const t = await sequelize.transaction();
+//   const t = await sequelize.transaction();
 
-  try {
-    let rs1 = await Todo.destroy({
-      where: { id: id1 },
-      transaction: t,
-    });
-    if (rs1 === 0) throw new Error("Cannot delete 1st id");
-    let rs2 = await Todo.destroy({
-      where: { id: id2 },
-      transaction: t,
-    });
-    if (rs2 === 0) throw new Error("Cannot delete 2nd id");
-    await t.commit();
-    res.json({ msg: `delete id: ${id1}, ${id2}` });
-  } catch (err) {
-    await t.rollback();
-    console.log("rollBack...");
-    next(err);
-  }
-};
+//   try {
+//     let rs1 = await Todo.destroy({
+//       where: { id: id1 },
+//       transaction: t,
+//     });
+//     if (rs1 === 0) throw new Error("Cannot delete 1st id");
+//     let rs2 = await Todo.destroy({
+//       where: { id: id2 },
+//       transaction: t,
+//     });
+//     if (rs2 === 0) throw new Error("Cannot delete 2nd id");
+//     await t.commit();
+//     res.json({ msg: `delete id: ${id1}, ${id2}` });
+//   } catch (err) {
+//     await t.rollback();
+//     console.log("rollBack...");
+//     next(err);
+//   }
+// };
 
-exports.doubleDelete2 = (req, res, next) => {
-  const { id1, id2 } = req.params;
-  let tsc;
-  sequelize
-    .transaction()
-    .then((t) => {
-      tsc = t;
-      return Todo.destroy({
-        where: { id: id1 },
-        transaction: tsc,
-      });
-    })
-    .then((rs) => {
-      if (rs === 0) throw new Error("cannot delete 1st id");
-      return Todo.destroy({
-        where: { id: id2 },
-        transaction: tsc,
-      });
-    })
-    .then((rs) => {
-      if (rs === 0) throw new Error("cannot delete 2nd id");
-      return tsc.commit();
-    })
-    .then(() => {
-      res.json({ msg: `delete id: ${id1}, ${id2}` });
-    })
-    .catch((err) => {
-      tsc.rollback().then(() => {
-        console.log("rollBack...");
-        next(err);
-      });
-    });
-};
+// exports.doubleDelete2 = (req, res, next) => {
+//   const { id1, id2 } = req.params;
+//   let tsc;
+//   sequelize
+//     .transaction()
+//     .then((t) => {
+//       tsc = t;
+//       return Todo.destroy({
+//         where: { id: id1 },
+//         transaction: tsc,
+//       });
+//     })
+//     .then((rs) => {
+//       if (rs === 0) throw new Error("cannot delete 1st id");
+//       return Todo.destroy({
+//         where: { id: id2 },
+//         transaction: tsc,
+//       });
+//     })
+//     .then((rs) => {
+//       if (rs === 0) throw new Error("cannot delete 2nd id");
+//       return tsc.commit();
+//     })
+//     .then(() => {
+//       res.json({ msg: `delete id: ${id1}, ${id2}` });
+//     })
+//     .catch((err) => {
+//       tsc.rollback().then(() => {
+//         console.log("rollBack...");
+//         next(err);
+//       });
+//     });
+// };

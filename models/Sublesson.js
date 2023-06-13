@@ -6,18 +6,21 @@ module.exports = (sequelize, DataTypes) => {
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         file: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         video: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        status: DataTypes.STRING,
-        courseImg :DataTypes.STRING,
+        time: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+
     },
     {
         underscored: true // carmelCase to underscore

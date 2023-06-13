@@ -11,7 +11,9 @@ exports.register = (req, res, next) => {
     email,
     mobile,
     schoolName } = req.body;
-  // Validation
+
+    
+
   if (!email || !password) throw new Error("must have email & password");
 
   if (password.length < 6 || password.length > 10)
@@ -41,10 +43,14 @@ exports.register = (req, res, next) => {
         email: rs.email
     }
     const token = jwt.sign(payload, `${process.env.JWT_SECRETKEY}`, {expiresIn: '30d'})
-    res.json({token : token})
+    return {token : token}
     })
+    // .then(data=>res.send(data))
 
-};
+    // .catch(err=> console.log(err))
+
+}
+
 
 exports.login = (req, res, next) => {
   const { email, password } = req.body;

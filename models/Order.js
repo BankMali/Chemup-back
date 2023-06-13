@@ -1,18 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
     const Order = sequelize.define('Order', {
-        amount: {
+        quantity: {
             type: DataTypes.STRING,
             allowNull: false,       // cant firstName = null
         },
-        total_price: {
+        totalPrice: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        status: DataTypes.STRING,
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         underscored: true // carmelCase to underscore

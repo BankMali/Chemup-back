@@ -4,8 +4,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,       // cant firstName = null
         },
-        status: DataTypes.STRING,
-        slipImg :DataTypes.STRING,
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        slipImg :{
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         underscored: true ,// carmelCase to underscore
