@@ -1,4 +1,4 @@
-const { Todo, User} = require("../models");
+const { Todo, User } = require("../models");
 
 exports.getAllTodos = (req, res, next) => {
   const { id } = req.user;
@@ -37,19 +37,6 @@ exports.summaryTodo = (req, res, next) => {
   });
 };
 
-
-exports.getTodoById = (req, res, next) => {
-  const { id } = req.params;
-  Todo.findOne({
-    attributes: ["title", "dueDate", "status"],
-    where: { id: id },
-  })
-    .then((rs) => {
-      res.json(rs);
-    })
-    .catch(next);
-};
-
 exports.createTodo = (req, res, next) => {
   // validation
   const { title, dueDate } = req.body;
@@ -77,8 +64,6 @@ exports.deleteTodo = (req, res, next) => {
     })
     .catch(next);
 };
-
-
 
 exports.updateTodo = (req, res, next) => {
   const { id } = req.params;
@@ -113,7 +98,6 @@ exports.getTodoByUser = (req, res, next) => {
     })
     .catch(next);
 };
-
 
 // exports.doubleDelete = async (req, res, next) => {
 //   const { id1, id2 } = req.params;
